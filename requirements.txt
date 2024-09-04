@@ -1,0 +1,404 @@
+1a. bilangan positif, negated, total dan ratrata
+import java.util.Scanner;
+
+public class HitungBilangan {
+    public static void main(String[] args) {
+        // Buat scanner untuk membaca input dari pengguna
+        Scanner scanner = new Scanner(System.in);
+
+        // Inisialisasi variabel untuk menghitung bilangan positif, negatif, total bilangan, dan jumlah keseluruhan
+        int positif = 0, negatif = 0, total = 0, jumlah = 0;
+
+        // Beri instruksi kepada pengguna
+        System.out.println("Masukkan bilangan bulat, akhiri dengan 0:");
+
+        // Loop untuk menerima input bilangan dari pengguna
+        while (true) {
+            // Baca bilangan yang dimasukkan pengguna
+            int bilangan = scanner.nextInt();
+
+            // Jika bilangan 0, keluar dari loop
+            if (bilangan == 0) break;
+
+            // Jika bilangan positif, tambahkan ke jumlah bilangan positif
+            if (bilangan > 0) positif++;
+
+            // Jika bilangan negatif, tambahkan ke jumlah bilangan negatif
+            if (bilangan < 0) negatif++;
+
+            // Tambahkan bilangan ke total jumlah
+            jumlah += bilangan;
+
+            // Tambahkan 1 ke total bilangan yang dihitung
+            total++;
+        }
+
+        // Hitung rata-rata bilangan, jika total tidak 0
+        double rataRata = (total != 0) ? (double) jumlah / total : 0;
+
+        // Tampilkan hasil perhitungan kepada pengguna
+        System.out.println("Bilangan positif ada: " + positif);
+        System.out.println("Bilangan negatif ada: " + negatif);
+        System.out.println("Total bilangan: " + total);
+        System.out.println("Rata-rata: " + rataRata);
+    }
+}
+
+1b. 
+Solusi Menggunakan Math.abs:
+
+Karena masalah perbandingan float, ganti kondisi while (sumf != 100.50) dengan kondisi yang membandingkan selisih antara sumf dan 100.50 menggunakan Math.abs, yang mengembalikan nilai absolut:
+java
+Copy code
+} while (Math.abs(sumf - 100.50) > 0.0001);
+Dengan cara ini, program akan berhenti ketika sumf cukup dekat dengan 100.50, dengan toleransi kesalahan yang kecil (0.0001).
+Program yang Sudah Diperbaiki:
+java
+Copy code
+import java.util.Scanner;
+
+public class Mendebug {
+    public static void main(String[] args) {
+        // Initialize sum
+        float sumf = 0;
+        float inputUser;
+        for (float i = 0.01f; i <= 1.0f; i = i + 0.01f)
+            sumf += i;
+
+        Scanner input = new Scanner(System.in);
+        System.out.println("Percobaan penjumlahan floating point.");
+        System.out.println("Program akan berhenti bila jumlah sama dengan 100.50!");
+
+        do {
+            System.out.printf("Variable sumf bernilai: %3.2f\n", sumf);
+            System.out.print("Tuliskan bilangan: ");
+            inputUser = input.nextFloat();
+            sumf = sumf + inputUser;
+        } while (Math.abs(sumf - 100.50) > 0.0001); // Perbandingan yang diperbaiki
+
+        System.out.println("Variable sumf sudah bernilai 100.50! Program berhenti.");
+    }
+}
+Penjelasan Solusi:
+Math.abs(sumf - 100.50) > 0.0001: Kondisi ini memastikan program berhenti jika sumf mendekati 100.50 dengan toleransi kesalahan yang kecil.
+Toleransi (0.0001): Nilai ini digunakan untuk memperhitungkan perbedaan kecil yang mungkin terjadi karena representasi desimal.
+
+1.c bilangan sempurna
+
+public class BilanganSempurna {
+    public static void main(String[] args) {
+        System.out.println("Program mencari bilangan sempurna kurang dari 10000:");
+
+        // Iterasi untuk memeriksa setiap bilangan dari 1 sampai 9999
+        for (int i = 1; i < 10000; i++) {
+            // Inisialisasi variabel untuk menyimpan jumlah faktor pembagi
+            int jumlahPembagi = 0;
+
+            // Cari semua faktor pembagi kecuali bilangan itu sendiri
+            for (int j = 1; j < i; j++) {
+                if (i % j == 0) {
+                    jumlahPembagi += j; // Tambahkan pembagi ke total
+                }
+            }
+
+            // Periksa apakah jumlah faktor sama dengan bilangan itu sendiri
+            if (jumlahPembagi == i) {
+                System.out.println(i); // Jika ya, cetak bilangan tersebut
+            }
+        }
+    }
+}
+
+1.d kalender
+import java.util.Scanner;
+
+public class Kalender {
+
+    // Metode untuk memeriksa apakah tahun kabisat
+    public static boolean isLeapYear(int year) {
+        return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+    }
+
+    // Metode untuk mendapatkan jumlah hari dalam bulan tertentu pada tahun tertentu
+    public static int getDaysInMonth(int year, int month) {
+        switch (month) {
+            case 1: return 31; // Januari
+            case 2: return isLeapYear(year) ? 29 : 28; // Februari
+            case 3: return 31; // Maret
+            case 4: return 30; // April
+            case 5: return 31; // Mei
+            case 6: return 30; // Juni
+            case 7: return 31; // Juli
+            case 8: return 31; // Agustus
+            case 9: return 30; // September
+            case 10: return 31; // Oktober
+            case 11: return 30; // November
+            case 12: return 31; // Desember
+            default: return 0; // Invalid bulan
+        }
+    }
+
+    // Metode untuk mendapatkan nama bulan
+    public static String getMonthName(int month) {
+        String[] monthNames = {"Januari", "Februari", "Maret", "April", "Mei", "Juni",
+                               "Juli", "Agustus", "September", "Oktober", "November", "Desember"};
+        return monthNames[month - 1];
+    }
+
+    // Metode untuk mendapatkan hari pertama pada bulan tertentu dalam tahun tertentu
+    public static int getStartDay(int year, int month) {
+        // 1 Januari 1800 adalah hari Rabu, jadi hari ke-3 dalam seminggu
+        int startDay1800 = 3;
+        int totalDays = 0;
+
+        // Hitung jumlah hari dari tahun 1800 sampai tahun sebelum tahun yang diberikan
+        for (int i = 1800; i < year; i++) {
+            totalDays += isLeapYear(i) ? 366 : 365;
+        }
+
+        // Tambah jumlah hari dari bulan-bulan sebelum bulan yang diberikan
+        for (int i = 1; i < month; i++) {
+            totalDays += getDaysInMonth(year, i);
+        }
+
+        // Hitung hari pertama
+        return (totalDays + startDay1800) % 7;
+    }
+
+    public static void printCalendar(int year, int month) {
+        System.out.println(getMonthName(month) + " " + year);
+        System.out.println("--------------------");
+        System.out.println("Ah Se Sl Ra Ka Ju Sa");
+
+        int startDay = getStartDay(year, month);
+        int daysInMonth = getDaysInMonth(year, month);
+
+        // Cetak spasi untuk hari pertama
+        for (int i = 0; i < startDay; i++) {
+            System.out.print("   ");
+        }
+
+        // Cetak hari-hari dalam bulan
+        for (int i = 1; i <= daysInMonth; i++) {
+            System.out.printf("%2d ", i);
+            if ((i + startDay) % 7 == 0) {
+                System.out.println();
+            }
+        }
+
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Tahun: ");
+        int year = scanner.nextInt();
+
+        System.out.print("Bulan: ");
+        int month = scanner.nextInt();
+
+        // Validasi input tahun dan bulan
+        if (year >= 1800 && month >= 1 && month <= 12) {
+            printCalendar(year, month);
+        } else {
+            System.out.println("Input tidak valid. Pastikan tahun >= 1800 dan bulan antara 1 dan 12.");
+        }
+
+        scanner.close();
+    }
+}
+
+
+
+Berikut ini adalah dua program dalam bahasa Java yang memenuhi permintaan Anda.
+
+01b.1. Mengetahui Jumlah Hari pada Suatu Bulan
+Program ini meminta input nomor bulan dan tahun dari pengguna, lalu menampilkan jumlah hari pada bulan tersebut.
+
+java
+Copy code
+import java.util.Scanner;
+
+public class JumlahHariBulan {
+    
+    // Metode untuk memeriksa apakah tahun kabisat
+    public static boolean isLeapYear(int year) {
+        return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+    }
+
+    // Metode untuk mendapatkan jumlah hari dalam bulan tertentu pada tahun tertentu
+    public static int getDaysInMonth(int month, int year) {
+        switch (month) {
+            case 1: return 31; // Januari
+            case 2: return isLeapYear(year) ? 29 : 28; // Februari
+            case 3: return 31; // Maret
+            case 4: return 30; // April
+            case 5: return 31; // Mei
+            case 6: return 30; // Juni
+            case 7: return 31; // Juli
+            case 8: return 31; // Agustus
+            case 9: return 30; // September
+            case 10: return 31; // Oktober
+            case 11: return 30; // November
+            case 12: return 31; // Desember
+            default: return 0; // Invalid bulan
+        }
+    }
+
+    // Metode untuk mendapatkan nama bulan
+    public static String getMonthName(int month) {
+        String[] monthNames = {"January", "February", "March", "April", "May", "June",
+                               "July", "August", "September", "October", "November", "December"};
+        return monthNames[month - 1];
+    }
+
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("Enter a month (1-12): ");
+        int month = input.nextInt();
+
+        System.out.print("Enter a year: ");
+        int year = input.nextInt();
+
+        input.close();
+
+        // Validasi input
+        if (month >= 1 && month <= 12) {
+            String monthName = getMonthName(month);
+            int days = getDaysInMonth(month, year);
+            System.out.println(monthName + " " + year + " has " + days + " days.");
+        } else {
+            System.out.println("Invalid month. Please enter a value between 1 and 12.");
+        }
+    }
+}
+Penjelasan Program:
+isLeapYear: Metode ini memeriksa apakah suatu tahun adalah tahun kabisat.
+getDaysInMonth: Metode ini mengembalikan jumlah hari dalam suatu bulan pada tahun tertentu.
+getMonthName: Metode ini mengembalikan nama bulan berdasarkan nomor bulan.
+Main Method: Program meminta pengguna untuk memasukkan nomor bulan dan tahun, memvalidasi input, dan kemudian mencetak jumlah hari dalam bulan tersebut.
+Cara Menggunakan Program:
+Kompilasi dan Jalankan Program: Kompilasi dan jalankan program di lingkungan Java.
+Masukkan Bulan dan Tahun: Masukkan nomor bulan (1-12) dan tahun saat diminta.
+Lihat Hasilnya: Program akan menampilkan jumlah hari dalam bulan tersebut.
+
+01b.2. Menampilkan 8 Bilangan Prima per Baris
+Program ini menampilkan bilangan prima dari 2 hingga 250, dengan delapan bilangan per baris.
+
+java
+Copy code
+public class BilanganPrima {
+
+    // Metode untuk memeriksa apakah suatu angka adalah bilangan prima
+    public static boolean isPrime(int num) {
+        if (num <= 1) {
+            return false;
+        }
+        for (int i = 2; i <= Math.sqrt(num); i++) {
+            if (num % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static void main(String[] args) {
+        int count = 0;
+
+        System.out.println("Bilangan prima dari 2 sampai 250:");
+        
+        for (int i = 2; i <= 250; i++) {
+            if (isPrime(i)) {
+                System.out.print(i + " ");
+                count++;
+                if (count % 8 == 0) {
+                    System.out.println();
+                }
+            }
+        }
+
+        System.out.println("\nJumlah bilangan prima dari 2 sampai 250 adalah: " + count);
+    }
+}
+Penjelasan Program:
+isPrime: Metode ini memeriksa apakah suatu angka adalah bilangan prima.
+Main Method: Program ini menghitung dan menampilkan bilangan prima dari 2 hingga 250, dengan delapan bilangan per baris.
+
+Berikut ini adalah versi OO dari program tersebut:
+
+Kelas Tuition
+java
+Copy code
+public class Tuition {
+    private double initialTuition;
+    private double currentTuition;
+    private int year;
+    private double growthRate;
+
+    // Constructor untuk menginisialisasi nilai awal
+    public Tuition(double initialTuition, double growthRate) {
+        this.initialTuition = initialTuition;
+        this.currentTuition = initialTuition;
+        this.year = 0;
+        this.growthRate = growthRate;
+    }
+
+    // Metode untuk menghitung kapan tuition menjadi dua kali lipat
+    public int calculateYearsToDouble() {
+        while (currentTuition < (2 * initialTuition)) {
+            currentTuition *= (1 + growthRate);
+            year++;
+        }
+        return year;
+    }
+
+    // Metode untuk mendapatkan tuition saat ini
+    public double getCurrentTuition() {
+        return currentTuition;
+    }
+
+    // Metode untuk mendapatkan tahun saat ini
+    public int getYear() {
+        return year;
+    }
+}
+Kelas DoubleTuition (dengan main method)
+java
+Copy code
+public class DoubleTuition {
+    public static void main(String[] args) {
+        double initialTuition = 10000;
+        double growthRate = 0.07;
+
+        // Membuat objek Tuition
+        Tuition tuition = new Tuition(initialTuition, growthRate);
+
+        // Menghitung berapa tahun hingga tuition menjadi dua kali lipat
+        int yearsToDouble = tuition.calculateYearsToDouble();
+
+        // Mencetak hasilnya
+        System.out.println("Tuition akan menjadi dua kali lipat dalam " + yearsToDouble + " tahun.");
+        System.out.println("Tuition pada saat itu akan menjadi " + tuition.getCurrentTuition());
+    }
+}
+Penjelasan:
+Kelas Tuition: Kelas ini menyimpan data initialTuition, currentTuition, year, dan growthRate. Constructor digunakan untuk menginisialisasi nilai awal.
+Metode calculateYearsToDouble: Metode ini melakukan perhitungan berapa tahun yang dibutuhkan untuk biaya SPP menjadi dua kali lipat. Metode ini mengembalikan nilai tahun (year) ketika tuition menjadi dua kali lipat.
+Metode getCurrentTuition: Metode ini mengembalikan nilai tuition saat ini.
+Kelas DoubleTuition: Kelas ini memiliki metode main untuk membuat objek Tuition, menghitung berapa tahun hingga tuition menjadi dua kali lipat, dan mencetak hasilnya.
+Contoh Eksekusi:
+Copy code
+Tuition akan menjadi dua kali lipat dalam 11 tahun.
+Tuition pada saat itu akan menjadi 21048.66799656468
+Dengan penerapan konsep Object-Oriented, kode menjadi lebih modular, mudah dipahami, dan dapat diperluas. Data dan logika pemrosesan dipisahkan dalam metode yang jelas, dan proses mencetak hasil dilakukan di dalam main method yang terpisah.
+
+
+
+
+
+
+
+
+
